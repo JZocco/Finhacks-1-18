@@ -1,12 +1,24 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const Header = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showLogIn, setShowLogIn] = useState(false);
 
+  const navigate = useNavigate(); // Initialize navigation
+
   // Toggle functions for modals
   const toggleSignUp = () => setShowSignUp(!showSignUp);
   const toggleLogIn = () => setShowLogIn(!showLogIn);
+
+  // Function to handle successful login or sign-up
+  const handleRedirect = () => {
+    // Close all modals
+    setShowSignUp(false);
+    setShowLogIn(false);
+    // Navigate to a new page (e.g., /dashboard)
+    navigate("/dashboard");
+  };
 
   return (
     <header className="bg-blue-100 w-screen p-4">
@@ -39,7 +51,13 @@ const Header = () => {
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-lg w-1/3">
             <h2 className="text-2xl font-bold mb-4">Log In</h2>
-            <form className="flex flex-col space-y-4">
+            <form
+              className="flex flex-col space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault(); // Prevent page refresh
+                handleRedirect(); // Redirect to new page
+              }}
+            >
               <input
                 type="email"
                 placeholder="Email"
@@ -72,7 +90,13 @@ const Header = () => {
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
           <div className="bg-white p-6 rounded shadow-lg w-1/3">
             <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
-            <form className="flex flex-col space-y-4">
+            <form
+              className="flex flex-col space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault(); // Prevent page refresh
+                handleRedirect(); // Redirect to new page
+              }}
+            >
               <input
                 type="text"
                 placeholder="Name"
