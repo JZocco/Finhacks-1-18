@@ -1,36 +1,26 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const Dashboard = () => {
-  // State to manage saved money, recent purchases, and input for redeeming/investing
+  // State to manage saved money, recent purchases, and redeem modal
   const [moneySaved, setMoneySaved] = useState(250.0); // Example: $250 saved
-  const [recentPurchases, setRecentPurchases] = useState([
+  const [recentPurchases] = useState([
     { item: "Groceries", amount: 50, date: "2025-01-10" },
     { item: "Electronics", amount: 100, date: "2025-01-12" },
     { item: "Clothing", amount: 20, date: "2025-01-15" },
   ]);
-  const [investAmount, setInvestAmount] = useState("");
-  const [redeemAmount, setRedeemAmount] = useState("");
+  const [showRedeemModal, setShowRedeemModal] = useState(false);
 
-  // Handlers for investing and redeeming money
-  const handleInvest = () => {
-    const amount = parseFloat(investAmount);
-    if (!isNaN(amount) && amount > 0 && amount <= moneySaved) {
-      setMoneySaved(moneySaved - amount);
-      alert(`Successfully invested $${amount.toFixed(2)}!`);
-      setInvestAmount("");
-    } else {
-      alert("Invalid amount to invest.");
-    }
-  };
+  const navigate = useNavigate(); // Navigation hook
 
-  const handleRedeem = () => {
-    const amount = parseFloat(redeemAmount);
-    if (!isNaN(amount) && amount > 0 && amount <= moneySaved) {
-      setMoneySaved(moneySaved - amount);
-      alert(`$${amount.toFixed(2)} has been transferred to your bank account!`);
-      setRedeemAmount("");
-    } else {
-      alert("Invalid amount to redeem.");
+  // Handle redeem submission
+  const handleRedeem = (redeemAmount: number) => {
+    if (redeemAmount > 0 && redeemAmount <= moneySaved) {
+        setMoneySaved(moneySaved - redeemAmount); // Deduct from moneySaved
+        alert(`$${redeemAmount.toFixed(2)} has been transferred to your bank account!`);
+        setShowRedeemModal(false); // Close the modal
+      } else {
+        alert("Invalid amount to redeem.");
     }
   };
 
@@ -41,11 +31,11 @@ const Dashboard = () => {
         {/* Left: Logo and Name */}
         <div className="flex items-center">
           <img
-            src="CouponKing.png"
+            src="CouponKing.png" // Replace with your actual logo URL
             alt="Logo"
             className="h-10 w-10 mr-3"
           />
-          <h1 className="text-2xl font-bold text-black">Coupon Kings</h1>
+          <h1 className="text-2xl font-bold text-black">CouponKings</h1>
         </div>
 
         {/* Right: Account Details Button */}
@@ -82,18 +72,11 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold mb-4">Invest Your Savings</h2>
           <p>Let us grow your money for you by investing it wisely!</p>
           <div className="mt-4">
-            <input
-              type="number"
-              placeholder="Enter amount to invest"
-              value={investAmount}
-              onChange={(e) => setInvestAmount(e.target.value)}
-              className="border p-2 rounded w-1/2 mr-2"
-            />
             <button
-              onClick={handleInvest}
+              onClick={() => navigate("/investment")} // Navigate to Investment page
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
-              Invest
+              Go to Investment Page
             </button>
           </div>
         </section>
@@ -103,15 +86,8 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold mb-4">Redeem Your Savings</h2>
           <p>Transfer your saved money directly to your bank account.</p>
           <div className="mt-4">
-            <input
-              type="number"
-              placeholder="Enter amount to redeem"
-              value={redeemAmount}
-              onChange={(e) => setRedeemAmount(e.target.value)}
-              className="border p-2 rounded w-1/2 mr-2"
-            />
             <button
-              onClick={handleRedeem}
+              onClick={() => setShowRedeemModal(true)}
               className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             >
               Redeem
@@ -119,6 +95,42 @@ const Dashboard = () => {
           </div>
         </section>
       </div>
+
+      {/* Redeem Modal */}
+      {showRedeemModal && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-6 rounded shadow-lg w-1/3">
+            <h2 className="text-2xl font-bold mb-4">Redeem Your Savings</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = e.target as HTMLFormElement; // Add this line
+                const amount = parseFloat((form.elements.namedItem("redeemAmount") as HTMLInputElement).value); // Add this line
+                handleRedeem(amount); // Call your redeem function
+              }}
+            >
+              <input
+                type="number"
+                name="redeemAmount"
+                placeholder="Enter amount to redeem"
+                className="border p-2 rounded w-full mb-4"
+              />
+              <button
+                type="submit"
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full"
+              >
+                Redeem
+              </button>
+            </form>
+            <button
+              onClick={() => setShowRedeemModal(false)}
+              className="mt-4 text-red-500 underline w-full text-center"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

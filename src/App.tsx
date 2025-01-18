@@ -1,17 +1,14 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Dashboard from "./pages/Dashboard"; // Create this page if it doesn't exist
-import Home from "./pages/Home"; // Existing Home page
+import Dashboard from "./pages/Dashboard";
+import Investment from "./pages/Investment";
 
 const App = () => {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/investment" element={<Investment />} />
+    </Routes>
   );
 };
 
