@@ -1,14 +1,16 @@
-import BirdPreview from "./components/BirdPreview";
-import Header from "./components/Header";
 
-import Bird1 from "./images/bird1.jpg";
-import Bird2 from "./images/bird2.jpg";
-import Bird3 from "./images/bird3.jpg";
+import Header from "./components/Header";
+import BenifitPreview from "./components/BenifitPreview";
+
+import PromoCode from "./images/PromoCodeImage.png";
+import SiteBank from "./images/SiteBank.png";
+import Investing from "./images/Investing.png";
 
 const App = () => {
-  const posts = [<BirdPreview imageSrc={Bird1} title="Fruity ahh bird" desription="He lowkey wanna eat some fruity pebbles" />,
-  <BirdPreview imageSrc={Bird2} title="Blue boy" desription="He j be blue n shi" />,
-  <BirdPreview imageSrc={Bird3} title="yucky bird" desription="dumb face, wanna just throw him" />];
+  const posts = [<BenifitPreview imageSrc={PromoCode} title="Get Coupon Codes" description= "Add later (In App.tsx)" />,
+  <BenifitPreview imageSrc={SiteBank} title="Collect Saved Money" description= "Add later (In App.tsx)" />,
+  <BenifitPreview imageSrc={Investing} title="Invest Your Savings" description= "Add later (In App.tsx)" />,
+];
 
   return (
     <>
