@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 const Dashboard = () => {
-  // State to manage saved money, recent purchases, and redeem modal
+  // State to manage saved money, recent purchases, redeem modal, and account modal
   const [moneySaved, setMoneySaved] = useState(250.0); // Example: $250 saved
   const [recentPurchases] = useState([
     { item: "Groceries", amount: 50, date: "2025-01-10" },
@@ -10,18 +10,26 @@ const Dashboard = () => {
     { item: "Clothing", amount: 20, date: "2025-01-15" },
   ]);
   const [showRedeemModal, setShowRedeemModal] = useState(false);
+  const [showAccountModal, setShowAccountModal] = useState(false); // State for account modal
 
   const navigate = useNavigate(); // Navigation hook
 
   // Handle redeem submission
   const handleRedeem = (redeemAmount: number) => {
     if (redeemAmount > 0 && redeemAmount <= moneySaved) {
-        setMoneySaved(moneySaved - redeemAmount); // Deduct from moneySaved
-        alert(`$${redeemAmount.toFixed(2)} has been transferred to your bank account!`);
-        setShowRedeemModal(false); // Close the modal
-      } else {
-        alert("Invalid amount to redeem.");
+      setMoneySaved(moneySaved - redeemAmount); // Deduct from moneySaved
+      alert(`$${redeemAmount.toFixed(2)} has been transferred to your bank account!`);
+      setShowRedeemModal(false); // Close the modal
+    } else {
+      alert("Invalid amount to redeem.");
     }
+  };
+
+  // Logout handler
+  const handleLogout = () => {
+    // Add any logout logic here (e.g., clear user session data)
+    alert("You have been logged out!");
+    navigate("/log-out"); // Redirect to home screen
   };
 
   return (
@@ -41,7 +49,7 @@ const Dashboard = () => {
         {/* Right: Account Details Button */}
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={() => alert("Account details coming soon!")}
+          onClick={() => setShowAccountModal(true)} // Open the account modal
         >
           Account Details
         </button>
@@ -125,6 +133,45 @@ const Dashboard = () => {
             <button
               onClick={() => setShowRedeemModal(false)}
               className="mt-4 text-red-500 underline w-full text-center"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Account Details Modal */}
+      {showAccountModal && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+          <div className="bg-white p-6 rounded shadow-lg w-1/3">
+            <h2 className="text-2xl font-bold mb-4">Account Details</h2>
+            <div className="mb-4">
+              <p><strong>Username:</strong> JohnDoe</p>
+              <p><strong>Email:</strong> john.doe@example.com</p>
+            </div>
+            <div className="flex flex-col space-y-4">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                onClick={handleLogout} // Logout and redirect to home
+              >
+                Log Out
+              </button>
+              <button
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                onClick={() => alert("Change password functionality coming soon!")}
+              >
+                Change Password
+              </button>
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                onClick={() => alert("Account preferences functionality coming soon!")}
+              >
+                Account Preferences
+              </button>
+            </div>
+            <button
+              className="mt-4 text-blue-500 underline w-full text-center"
+              onClick={() => setShowAccountModal(false)} // Close the modal
             >
               Close
             </button>

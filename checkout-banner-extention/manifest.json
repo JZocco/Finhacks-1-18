@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "Checkout Banner",
+    "version": "1.0",
+    "description": "Show a custom banner on checkout pages.",
+    "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["*://*/*"],
+    "content_scripts": [
+      {
+        "matches": ["https://*/*checkout*", "https://*/*c*"],
+        "js": ["content.js"]
+      }
+    ],
+    "icons": {
+      "48": "CouponKing.png",
+      "128": "CouponKing.png"
+    }
+  }
+  
