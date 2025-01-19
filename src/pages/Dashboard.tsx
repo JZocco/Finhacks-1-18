@@ -29,7 +29,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     // Add any logout logic here (e.g., clear user session data)
     alert("You have been logged out!");
-    navigate("/log-out"); // Redirect to home screen
+    navigate("/"); // Redirect to home screen
   };
 
   return (
