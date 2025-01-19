@@ -16,7 +16,7 @@ const Home = () => {
     <div>
       <Header />
       <div className="p-8">
-        <h1 className="text-3xl font-bold">Welcome to CouponKings!</h1>
+        <h1 className="text-3xl font-bold">Welcome to Couvest!</h1>
         <p>Discover the best deals and save money.</p>
         {posts.map((post) => {
           return <div>{post}</div>;

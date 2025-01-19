@@ -43,7 +43,7 @@ const Dashboard = () => {
             alt="Logo"
             className="h-10 w-10 mr-3"
           />
-          <h1 className="text-2xl font-bold text-black">CouponKings</h1>
+          <h1 className="text-2xl font-bold text-black">Couvest</h1>
         </div>
 
         {/* Right: Account Details Button */}

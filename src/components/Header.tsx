@@ -26,7 +26,7 @@ const Header = () => {
         {/* Left: Logo and title */}
         <div className="flex items-center">
           <img src="CouponKing.png" alt="Logo" className="h-10 w-10 mr-3" />
-          <li className="text-black-700 text-3xl font-bold">CouponKings</li>
+          <li className="text-black-700 text-3xl font-bold">Couvest</li>
         </div>
 
         {/* Right: Buttons */}
